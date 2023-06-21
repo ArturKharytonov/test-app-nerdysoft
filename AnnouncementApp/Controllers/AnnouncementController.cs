@@ -50,15 +50,15 @@ namespace AnnouncementApp.Controllers
         }
 
         [HttpPost("announcement/add")]
-        public IActionResult AddAnnouncement(Announcement announcement)
+        public IActionResult AddAnnouncement(string title, string description)
         {
-            Announcement anotherAnnouncement = new Announcement(announcement.Title, announcement.Description);
+            Announcement anotherAnnouncement = new Announcement(title, description);
 
             _announcements.Add(anotherAnnouncement);
             SaveList();
             return Ok("Announcement was added!");
         }
-
+        
         [HttpGet("announcement/get/all")]
         public IActionResult GetAllAnnouncement()
         {
@@ -68,12 +68,12 @@ namespace AnnouncementApp.Controllers
         }
 
         [HttpDelete("announcement/delete")]
-        public IActionResult DeleteAnnouncement(Announcement announcement)
+        public IActionResult DeleteAnnouncement(string id)
         {
             if (_announcements.Count <= 0) return NoContent();
             foreach (var value in _announcements)
             {
-                if (value.Id == announcement.Id)
+                if (value.Id == id)
                 {
                     _announcements.Remove(value);
                     SaveList();
