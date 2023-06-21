@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\PROGRAMMING\\C# projects\\Web\\AnnouncementApp\\AnnouncementApp.csproj": {}
+    "C:\\Users\\Arturio Armany\\Documents\\GitHub\\test-app-nerdysoft\\AnnouncementApp\\AnnouncementApp.csproj": {}
   },
   "projects": {
-    "D:\\PROGRAMMING\\C# projects\\Web\\AnnouncementApp\\AnnouncementApp.csproj": {
+    "C:\\Users\\Arturio Armany\\Documents\\GitHub\\test-app-nerdysoft\\AnnouncementApp\\AnnouncementApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\PROGRAMMING\\C# projects\\Web\\AnnouncementApp\\AnnouncementApp.csproj",
+        "projectUniqueName": "C:\\Users\\Arturio Armany\\Documents\\GitHub\\test-app-nerdysoft\\AnnouncementApp\\AnnouncementApp.csproj",
         "projectName": "AnnouncementApp",
-        "projectPath": "D:\\PROGRAMMING\\C# projects\\Web\\AnnouncementApp\\AnnouncementApp.csproj",
+        "projectPath": "C:\\Users\\Arturio Armany\\Documents\\GitHub\\test-app-nerdysoft\\AnnouncementApp\\AnnouncementApp.csproj",
         "packagesPath": "C:\\Users\\Arturio Armany\\.nuget\\packages\\",
-        "outputPath": "D:\\PROGRAMMING\\C# projects\\Web\\AnnouncementApp\\obj\\",
+        "outputPath": "C:\\Users\\Arturio Armany\\Documents\\GitHub\\test-app-nerdysoft\\AnnouncementApp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Arturio Armany\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -40,6 +40,10 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.2.3, )"

@@ -1,6 +1,9 @@
-﻿using AnnouncementApp.Models;
+﻿using System.IO;
+using System.Text;
+using AnnouncementApp.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace AnnouncementApp.Controllers
 {
@@ -8,7 +11,43 @@ namespace AnnouncementApp.Controllers
     [ApiController]
     public class AnnouncementController : ControllerBase
     {
-        private static List<Announcement> _announcements = new List<Announcement>();
+        private static List<Announcement> _announcements = SetList();
+
+        private static List<Announcement> SetList()
+            => LoadList() != "" ? JsonConvert.DeserializeObject<List<Announcement>>(LoadList()) 
+                : new List<Announcement>();
+
+        private static void SaveList()
+        {
+            string json = JsonConvert.SerializeObject(_announcements);
+            using (Stream stream = new FileStream("announcements.json", FileMode.Create))
+            {
+                using (StreamWriter writer = new StreamWriter(stream, Encoding.UTF8))
+                {
+                    writer.Write(json);
+                }
+            }
+        }
+
+        private static string LoadList()
+        {
+            if (System.IO.File.Exists("announcements.json"))
+            {
+                string txt = "";
+                using (Stream stream = new FileStream("announcements.json", FileMode.Open))
+                {
+                    using (StreamReader reader = new StreamReader(stream, Encoding.UTF8))
+                    {
+                        while (!reader.EndOfStream)
+                        {
+                            txt += reader.ReadLine() + "\n";
+                        }
+                    }
+                }
+                return txt;
+            }
+            return "";
+        }
 
         [HttpPost("announcement/add")]
         public IActionResult AddAnnouncement(Announcement announcement)
@@ -16,6 +55,7 @@ namespace AnnouncementApp.Controllers
             Announcement anotherAnnouncement = new Announcement(announcement.Title, announcement.Description);
 
             _announcements.Add(anotherAnnouncement);
+            SaveList();
             return Ok("Announcement was added!");
         }
 
@@ -36,11 +76,13 @@ namespace AnnouncementApp.Controllers
                 if (value.Id == announcement.Id)
                 {
                     _announcements.Remove(value);
+                    SaveList();
                     return Ok();
                 }
             }
             return NotFound();
         }
+
         [HttpPut("announcement/edit")]
         public IActionResult EditAnnouncement(string id, Announcement announcement)
         {
@@ -51,6 +93,7 @@ namespace AnnouncementApp.Controllers
                 {
                     _announcements[i] = announcement;
                     _announcements[i].Id = id;
+                    SaveList();
                     return Ok();
                 }
             }
@@ -86,7 +129,7 @@ namespace AnnouncementApp.Controllers
         }
 
         [HttpGet("announcement/get/info")]
-        public IActionResult GetSimilarAnnouncement(string id)
+        public IActionResult GetMoreInfo(string id)
         {
             if (_announcements.Count <= 0) return NoContent();
             foreach (var value in _announcements)
